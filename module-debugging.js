@@ -21,9 +21,8 @@ var ModuleDebugging = function (my) {
 	}
 
 	// Initialization hook for submodules
-	_private._onInit.push(function(spec) {
+	_private._onInit(function(spec) {
 		_private._debugName = spec.name;
-		console.log("Debugging initialized with name " + _private._debugName)
 	});
 
 	return my;

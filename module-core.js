@@ -15,24 +15,39 @@ var ModuleCore = function (my) {
 	// Private variables
 	_private._container = null;
 	_private._messages = [];
-	_private._onInit = [];
+	_private._initQueue = [];
 	
 	// Public constructor
 	my.Create = function(spec) {
 		return new _private.Nodeler(spec);
 	}
 
-	// Private constructor
+	// Call initializers functions and pass them the spec
+	_private.initializeModules = function(spec) {
+		for (var i = 0; i < _private._initQueue.length; ++i) {
+			_private._initQueue[i].call(null, spec);
+		}
+	}
+
+	// Places an initialization function into the queue
+	_private._onInit = function(func) {
+		if (typeof func === 'function') {
+			_private._initQueue.push(func);
+		} else {
+			console.error("onInit func was type " + (typeof func) + " instead of a function.");
+		}
+	}
+
+	// Private constructor of engine instance
 	_private.Nodeler = function(spec) {
 		_private._container = document.getElementById(spec.name);
-		_private._container.classList.add("boxxler");
-		// Call initializers
-		for (var i = 0; i < _private._onInit.length; ++i) {
-			console.log("onInit:");
-			if (typeof _private._onInit[i] === 'function') {
-				_private._onInit[i].call(this, spec);
-			}
+		if (_private._container === null) {
+			_private._container = document.createElement('div');
+			_private._container.id = spec.name;
+			document.body.appendChild(_private._container);
 		}
+		_private._container.classList.add("boxxler");
+		_private.initializeModules(spec);
 	}
 
 	// Public methods
@@ -44,10 +59,7 @@ var ModuleCore = function (my) {
 		return _private._displaySize(text, "22px");
 	}
 
-	_private.Nodeler.prototype.debug = function() {
-		this.display("My name is " + _private._name);
-	}
-
+	// Private methods
 	_private._storeMessage = function(element, text) {
 		_private._messages.push({"element":element, "text":text});
 	}

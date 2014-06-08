@@ -1,14 +1,7 @@
-#containerA {
-	background-color: lemonchiffon;
-}
-
-#containerB {
-	background-color: lavender;
-}
-
 div.boxxler {
 	display: inline-block;
 	min-width: 6em;
+	min-height: 6em;
 	padding: 0.5em;
 	margin: 0.5em;
 }
