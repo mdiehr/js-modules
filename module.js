@@ -12,45 +12,60 @@ var TextNodeler = (function (my) {
 			my._unseal = _unseal;
 		};
 
-	// permanent access to _private, _seal, and _unseal
-	_private.container = null;
-	_private.messages = [];
-
-	_private.StoreMessage = function(element, text) {
-		_private.messages.push({"element":element, "text":text});
+	// Private variables
+	_private._container = null;
+	_private._messages = [];
+	_private._onInit = [];
+	
+	// Public constructor
+	my.Create = function(spec) {
+		return new _private.Nodeler(spec);
 	}
 
-	_private.MakeParagraph = function(parent) {
+	// Private constructor
+	_private.Nodeler = function(spec) {
+		_private._container = document.getElementById(spec.name);
+		_private._container.classList.add("boxxler");
+		// Call initializers
+		for (var i = 0; i < _private._onInit.length; ++i) {
+			console.log("onInit:");
+			if (typeof _private._onInit[i] === 'function') {
+				_private._onInit[i].call(this, spec);
+			}
+		}
+	}
+
+	// Public methods
+	_private.Nodeler.prototype.display = function(text) {
+		return _private._displaySize(text, "18px");
+	}
+
+	_private.Nodeler.prototype.displayBig = function(text) {
+		return _private._displaySize(text, "22px");
+	}
+
+	_private.Nodeler.prototype.debug = function() {
+		this.display("My name is " + _private._name);
+	}
+
+	_private._storeMessage = function(element, text) {
+		_private._messages.push({"element":element, "text":text});
+	}
+
+	_private._makeParagraph = function(parent) {
 		var paragraphElement = document.createElement('p');
 		parent.appendChild(paragraphElement);
 		return paragraphElement;
 	}
 
-	_private.displaySize = function(text, sizeStyle) {
-		var pElem = _private.MakeParagraph(_private.container);
+	_private._displaySize = function(text, sizeStyle) {
+		var pElem = _private._makeParagraph(_private._container);
 		pElem.appendChild(document.createTextNode(text));
-		_private.StoreMessage(pElem, text);
+		_private._storeMessage(pElem, text);
 		if (sizeStyle !== undefined)
 			pElem.style.fontSize = sizeStyle;
 		return pElem;
 	}
-
-	my.load = function(containerId) {
-		_private.container = document.getElementById(containerId);
-		_private.container.classList.add("boxxler");
-		return my;
-	}
-
-	my.display = function(text) {
-		return _private.displaySize(text, "18px");
-	}
-
-	my.displayBig = function(text) {
-		return _private.displaySize(text, "22px");
-	}
-
-	// Hide the private state from other files
-	_seal();
 
 	return my;
 }(TextNodeler || {}));
