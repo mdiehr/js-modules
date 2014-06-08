@@ -1,4 +1,4 @@
-var TextNodeler = (function (my) {
+var ModuleCore = function (my) {
 	// Shared private state
 	var _private = my._private = my._private || {},
 		_seal = my._seal = my._seal || function () {
@@ -68,4 +68,4 @@ var TextNodeler = (function (my) {
 	}
 
 	return my;
-}(TextNodeler || {}));
+};

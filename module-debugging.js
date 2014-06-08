@@ -1,4 +1,4 @@
-var TextNodeler = (function (my) {
+var ModuleDebugging = function (my) {
 	// Shared private state
 	var _private = my._private = my._private || {},
 		_seal = my._seal = my._seal || function () {
@@ -15,20 +15,16 @@ var TextNodeler = (function (my) {
 	// Private variables
 	_private._debugName = "";
 
-	// Initialization hook
-	_private._initDebug = function(spec) {
-		_private._debugName = spec.name;
-		console.log("Debugging initialized with name " + _private._debugName)
-	}
-	_private._onInit.push(_private._initDebug);
-
-
+	// Private methods
 	_private.Nodeler.prototype.debug = function() {
 		this.display("My name is " + _private._debugName);
 	}
 
-	// Hide the private state from other files
-	_seal();
+	// Initialization hook for submodules
+	_private._onInit.push(function(spec) {
+		_private._debugName = spec.name;
+		console.log("Debugging initialized with name " + _private._debugName)
+	});
 
 	return my;
-}(TextNodeler || {}));
+};
