@@ -18,10 +18,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	B.debug();
 
 	// Create a brand new message box and have it print its name
-	TextBoxMaker.Create({name:"lawngreen", color:"lawngreen"}).debug();
+	var C = TextBoxMaker.Create({name:"lawngreen", color:"lawngreen"});
+	C.debug();
 
-	A.onClick(function(){A.setColor("red")});
+	// Change color
+	A.onClick(A.setColor.bind(A, "red"));
 
-	B.onClick(function(){B.display("Ouch!")});
+	// Add text
+	B.onClick(B.display.bind(B, "Ouch!"));
+	
+	// Toggle
+	var i = 0;
+	C.onClick(function(){C.setColor(((++i%2)==1)?"green":"lawngreen")});
 
 });

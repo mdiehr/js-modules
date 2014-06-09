@@ -1,79 +1,75 @@
 var ModuleCore = function (my) {
-	// Shared private state
-	var _private = my._private = my._private || {},
-		_seal = my._seal = my._seal || function () {
-			delete my._private;
-			delete my._seal;
-			delete my._unseal;
-		},
-		_unseal = my._unseal = my._unseal || function () {
-			my._private = _private;
-			my._seal = _seal;
-			my._unseal = _unseal;
-		};
 
+	////////////////////////////////////////
 	// Private variables
-	_private._container = null;
-	_private._messages = [];
-	_private._initQueue = [];
+
+	my._container = null;
+	my._messages = [];
+	my._initQueue = [];
 	
-	// Public constructor
+	////////////////////////////////////////
+	// Engine initialization
+
 	my.Create = function(spec) {
-		return new _private.TBMaker(spec);
+		return new my.TBMaker(spec);
 	}
 
-	// Call initializers functions and pass them the spec
-	_private.initializeModules = function(spec) {
-		for (var i = 0; i < _private._initQueue.length; ++i) {
-			_private._initQueue[i].call(null, spec);
+	// Call initializer functions and pass them the spec
+	my.initializeModules = function(spec) {
+		for (var i = 0; i < my._initQueue.length; ++i) {
+			my._initQueue[i].call(null, spec);
 		}
 	}
 
-	// Places an initialization function into the queue
-	_private._onInit = function(func) {
+	// Registers a module to be initialized with the spec
+	my._onInit = function(func) {
 		if (typeof func === 'function') {
-			_private._initQueue.push(func);
+			my._initQueue.push(func);
 		} else {
 			console.error("onInit func was type " + (typeof func) + " instead of a function.");
 		}
 	}
 
-	// Private constructor of engine instance
-	_private.TBMaker = function(spec) {
-		_private._container = document.getElementById(spec.name);
-		if (_private._container === null) {
-			_private._container = document.createElement('div');
-			_private._container.id = spec.name;
-			document.body.appendChild(_private._container);
+	// Engine instance constructor function
+	my.TBMaker = function(spec) {
+		my._container = document.getElementById(spec.name);
+		if (my._container === null) {
+			my._container = document.createElement('div');
+			my._container.id = spec.name;
+			document.body.appendChild(my._container);
 		}
-		_private._container.classList.add("boxxler");
-		_private.initializeModules(spec);
+		my._container.classList.add("boxxler");
+		my.initializeModules(spec);
 	}
 
+	////////////////////////////////////////
 	// Public methods
-	_private.TBMaker.prototype.display = function(text) {
-		return _private._displaySize(text, "18px");
+
+	my.TBMaker.prototype.display = function(text) {
+		return my._displaySize(text, "18px");
 	}
 
-	_private.TBMaker.prototype.displayBig = function(text) {
-		return _private._displaySize(text, "22px");
+	my.TBMaker.prototype.displayBig = function(text) {
+		return my._displaySize(text, "22px");
 	}
 
+	////////////////////////////////////////
 	// Private methods
-	_private._storeMessage = function(element, text) {
-		_private._messages.push({"element":element, "text":text});
+
+	my._storeMessage = function(element, text) {
+		my._messages.push({"element":element, "text":text});
 	}
 
-	_private._makeParagraph = function(parent) {
+	my._makeParagraph = function(parent) {
 		var paragraphElement = document.createElement('p');
 		parent.appendChild(paragraphElement);
 		return paragraphElement;
 	}
 
-	_private._displaySize = function(text, sizeStyle) {
-		var pElem = _private._makeParagraph(_private._container);
+	my._displaySize = function(text, sizeStyle) {
+		var pElem = my._makeParagraph(my._container);
 		pElem.appendChild(document.createTextNode(text));
-		_private._storeMessage(pElem, text);
+		my._storeMessage(pElem, text);
 		if (sizeStyle !== undefined)
 			pElem.style.fontSize = sizeStyle;
 		return pElem;

@@ -7,8 +7,7 @@ var TextBoxMaker = {
 		ModuleDebugging(engine);
 		ModuleColor(engine);
 		ModuleClick(engine);
-		// Seal the private state
-		engine._seal();
+		// Return to caller
 		return engine.Create(spec);
 	}
 };
