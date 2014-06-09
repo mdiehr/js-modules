@@ -19,7 +19,7 @@ var ModuleCore = function (my) {
 	
 	// Public constructor
 	my.Create = function(spec) {
-		return new _private.Nodeler(spec);
+		return new _private.TBMaker(spec);
 	}
 
 	// Call initializers functions and pass them the spec
@@ -39,7 +39,7 @@ var ModuleCore = function (my) {
 	}
 
 	// Private constructor of engine instance
-	_private.Nodeler = function(spec) {
+	_private.TBMaker = function(spec) {
 		_private._container = document.getElementById(spec.name);
 		if (_private._container === null) {
 			_private._container = document.createElement('div');
@@ -51,11 +51,11 @@ var ModuleCore = function (my) {
 	}
 
 	// Public methods
-	_private.Nodeler.prototype.display = function(text) {
+	_private.TBMaker.prototype.display = function(text) {
 		return _private._displaySize(text, "18px");
 	}
 
-	_private.Nodeler.prototype.displayBig = function(text) {
+	_private.TBMaker.prototype.displayBig = function(text) {
 		return _private._displaySize(text, "22px");
 	}
 

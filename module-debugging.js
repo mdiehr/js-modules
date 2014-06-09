@@ -16,7 +16,7 @@ var ModuleDebugging = function (my) {
 	_private._debugName = "";
 
 	// Private methods
-	_private.Nodeler.prototype.debug = function() {
+	_private.TBMaker.prototype.debug = function() {
 		this.display("My name is " + _private._debugName);
 	}
 

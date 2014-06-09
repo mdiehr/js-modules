@@ -29,7 +29,7 @@ var ModuleColor = function (my) {
 	}
 
 	// Public interface for color
-	_private.Nodeler.prototype.setColor = _private._setColor;
+	_private.TBMaker.prototype.setColor = _private._setColor;
 
 	return my;
 };

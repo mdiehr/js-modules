@@ -1,9 +1,6 @@
-var TextNodeler = (function (my) {
-	// Private state
-	var _private = {};
-
+var TextBoxMaker = {
 	// Public constructor
-	my.Create = function(spec) {
+	Create: function(spec) {
 		var engine = {};
 		// Load each module
 		ModuleCore(engine);
@@ -14,6 +11,4 @@ var TextNodeler = (function (my) {
 		engine._seal();
 		return engine.Create(spec);
 	}
-
-	return my;
-}(TextNodeler || {}));
+};

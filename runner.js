@@ -1,11 +1,11 @@
 // Go
 document.addEventListener("DOMContentLoaded", function(event) {
 	
-	var A = TextNodeler.Create({name:"containerA", color:"lemonchiffon"});
+	var A = TextBoxMaker.Create({name:"containerA", color:"lemonchiffon"});
 	A.display("Hello A!");
 	A.displayBig("Big Hello!");
 
-	var B = TextNodeler.Create({name:"containerB", color:"lavender"});
+	var B = TextBoxMaker.Create({name:"containerB", color:"lavender"});
 	B.display("Goodbye B!");
 	B.displayBig("Big Goodbye!");
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	B.debug();
 
 	// Create a brand new message box and have it print its name
-	TextNodeler.Create({name:"lawngreen", color:"lawngreen"}).debug();
+	TextBoxMaker.Create({name:"lawngreen", color:"lawngreen"}).debug();
 
 	A.onClick(function(){A.setColor("red")});
 

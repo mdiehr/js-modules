@@ -40,7 +40,7 @@ var ModuleClick = function (my) {
 	}
 
 	// Public interface for click events
-	_private.Nodeler.prototype.onClick = _private._onClick;
+	_private.TBMaker.prototype.onClick = _private._onClick;
 
 	return my;
 };
