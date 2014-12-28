@@ -4,6 +4,7 @@ div.boxxler {
 	min-height: 6em;
 	padding: 0.5em;
 	margin: 0.5em;
+	vertical-align: top;
 }
 
 div.boxxler p {
